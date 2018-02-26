@@ -1,0 +1,25 @@
+{
+  "name": "com.anas.alipay",
+  "version": "1.0.0",
+  "description": "Anas Alipay",
+  "cordova": {
+    "id": "com.anas.alipay",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BeanYong/com.anas.alipay.git"
+  },
+  "keywords": [
+    "cordova",
+    "alipay",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "Anas BeanYon",
+  "license": "Apache-2.0"
+}
