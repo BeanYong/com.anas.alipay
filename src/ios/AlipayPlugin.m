@@ -26,10 +26,10 @@ static AlipayPlugin *instance;
         NSString* tradeInfo = [command.arguments objectAtIndex:0];
         
         // 应用注册scheme,在AliSDKDemo-Info.plist定义URL types，用于支付完成后支付宝正确返回到App，注意，字符串可以为随机字符串，但需要足够随机，否则无法支付完成后App无法正确跳转
-        NSString *motoralipay = @"motoralipay";
+        NSString *your_scheme = @"your_scheme";
         
         // 开始支付
-        [[AlipaySDK defaultService] payOrder:tradeInfo fromScheme:motoralipay callback:^(NSDictionary *resultDic) {
+        [[AlipaySDK defaultService] payOrder:tradeInfo fromScheme:your_scheme callback:^(NSDictionary *resultDic) {
             
             // 在控制台输出支付结果
             NSLog(@"reslut = %@",resultDic);
