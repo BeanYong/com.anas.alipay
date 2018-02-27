@@ -58,7 +58,7 @@ public class AlipayPlugin extends CordovaPlugin {
     if (ACTION_FLAG.equals(action)) {
 
       // 调用支付宝付款，并根据支付情况返回插件调用结果
-	    return payV2(args.getString(0));
+      return payV2(args.getString(0));
 
     }
 
@@ -74,7 +74,7 @@ public class AlipayPlugin extends CordovaPlugin {
     @SuppressWarnings("unused")
     public void handleMessage(Message msg) {
       // 判断消息类型是否为支付完成
-      if(SDK_PAY_FLAG == msg.what) {
+      if (SDK_PAY_FLAG == msg.what) {
 
         // 构造支付结果对象
         @SuppressWarnings("unchecked")
@@ -86,20 +86,12 @@ public class AlipayPlugin extends CordovaPlugin {
         // 获取支付状态码
         String resultStatus = payResult.getResultStatus();
 
-        // 判断resultStatus 为9000则代表支付成功
-        if (TextUtils.equals(resultStatus, "9000")) {
-
-          // 支付结果回调传入alipay.js，该笔订单是否真实支付成功，需要依赖服务端的异步通知
-          currentCallbackContext.success(mResult);
-
-        } else {
-
-          // 支付失败，再次强调该笔订单真实的支付结果，需要依赖服务端的异步通知
-          Toast.makeText(mContext, "支付失败", Toast.LENGTH_SHORT).show();
-
-        }
+        // 支付结果回调传入alipay.js，该笔订单是否真实支付成功，需要依赖服务端的异步通知
+        currentCallbackContext.success(mResult);
       }
-    };
+    }
+
+    ;
   };
 
   /**
@@ -125,7 +117,7 @@ public class AlipayPlugin extends CordovaPlugin {
         Log.i("msp", result.toString());
 
         // 保存支付结果
-        mResult = result.toString();
+        mResult = formatResult(result);
 
         // 构建并发送支付消息，通知消息处理器进行响应
         Message msg = new Message();
@@ -142,5 +134,33 @@ public class AlipayPlugin extends CordovaPlugin {
 
     // 支付线程正常启动
     return true;
+  }
+
+  /**
+   * 格式化支付结果
+   *
+   * @param resultMap 支付结果
+   * @return 格式化后的字符串
+   */
+  private String formatResult(Map<String, String> resultMap) {
+    String result = resultMap.get("result");
+    // 如果result为空，则构造空数据用于拼装
+    if (TextUtils.isEmpty(result)) {
+      result = "\"\"";
+    }
+
+    // 开始拼装
+    String formatResult = "{";
+    formatResult += "\"memo\":";
+    formatResult += "\"";
+    formatResult += resultMap.get("memo");
+    formatResult += "\"";
+    formatResult += ",\"result\":";
+    formatResult += result;
+    formatResult += ",\"resultStatus\":";
+    formatResult += resultMap.get("resultStatus");
+    formatResult += "}";
+    Log.i("BeanYon", formatResult);
+    return formatResult;
   }
 }
