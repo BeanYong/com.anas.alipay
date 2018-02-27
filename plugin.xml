@@ -43,22 +43,7 @@
         <!-- build setting header search path $(SRCROOT)/X5 -->
         <header-file src="src/ios/AlipayPlugin.h" />
         <source-file src="src/ios/AlipayPlugin.m" />
-        <header-file src="src/ios/Order.h" />
-        <source-file src="src/ios/Order.m" />
 
-        <!-- Util -->
-
-        <header-file src="src/ios/Util/base64.h" />
-        <source-file src="src/ios/Util/base64.m" />
-        <header-file src="src/ios/Util/config.h" />
-        <header-file src="src/ios/Util/NSDataEx.h" />
-        <source-file src="src/ios/Util/NSDataEx.m" />
-        <header-file src="src/ios/Util/openssl_wrapper.h" />
-        <source-file src="src/ios/Util/openssl_wrapper.m" />
-        <header-file src="src/ios/Util/RSADataSigner.h" />
-        <source-file src="src/ios/Util/RSADataSigner.m" />
-        <header-file src="src/ios/Util/RSADataVerifier.h" />
-        <source-file src="src/ios/Util/RSADataVerifier.m" />
         <resource-file src="src/ios/AlipaySDK.bundle"/>
 
         <config-file target="config.xml" parent="/*">

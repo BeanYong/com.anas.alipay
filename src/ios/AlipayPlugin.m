@@ -1,6 +1,4 @@
 #import "AlipayPlugin.h"
-#import "Order.h"
-#import "RSADataSigner.h"
 #import <AlipaySDK/AlipaySDK.h>
 
 @implementation AlipayPlugin
