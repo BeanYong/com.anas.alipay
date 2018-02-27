@@ -67,7 +67,7 @@ cordova plugin add E:\Anasit\plugins\com.anas.alipay
             AlipayPlugin *plugin = [[AlipayPlugin alloc] init];
             [plugin backToJs:resultDic];
         }];
-        
+
     }
     return YES;
 }
@@ -121,4 +121,10 @@ cordova plugin add E:\Anasit\plugins\com.anas.alipay
     orderInfo
   );
 ```
+
+## 作者
+
+**闫斌（BeanYon）**
+
+- Email：1054639005@qq.com
 
