@@ -10,27 +10,37 @@ Anas Alipay Cordova Plugin，基于支付宝官方SDK进行封装，支持Androi
 
 首先，使用如下命令将插件代码clone到本地
 
-> git clone https://github.com/BeanYong/com.anas.alipay.git
+``` 
+git clone https://github.com/BeanYong/com.anas.alipay.git
+``` 
 
 ### 修改scheme
 
 在插件目录com.anas.alipay/src/ios下，找到AlipayPlugin.m文件，对其中your_scheme进行编辑，将其修改为自定义的Scheme，具体为如下一行
 
-> NSString *your_scheme = @"your_scheme";
+``` 
+NSString *your_scheme = @"your_scheme";
+``` 
 
 例如修改为
 
-> NSString *your_scheme = @"qazxcfghjklmnbgfdw";
+``` 
+NSString *your_scheme = @"qazxcfghjklmnbgfdw";
+``` 
 
 **scheme为自己应用的唯一标识，作为支付宝支付完成后跳转的凭据，可以设置为随机值，但要尽量确保scheme在用户手机上的唯一性。**
 
 ### 安装插件
 
-> cordova plugin add 插件在本机的路径
+``` 
+cordova plugin add 插件在本机的路径
+``` 
 
 例如
 
-> cordova plugin add E:\Anasit\plugins\com.anas.alipay
+``` 
+cordova plugin add E:\Anasit\plugins\com.anas.alipay
+``` 
 
 ## 配置
 
@@ -40,10 +50,44 @@ Anas Alipay Cordova Plugin，基于支付宝官方SDK进行封装，支持Androi
 
 在AppDelegate.h文件中加入如下代码
 
-> #import "AlipayPlugin.h"
+``` 
+#import "AlipayPlugin.h"
+``` 
 
 在AppDelegate.m文件中加入如下代码
 
+```
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if ([url.host isEqualToString:@"safepay"]) {
+
+        // 支付跳转支付宝钱包进行支付，处理支付结果
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+            AlipayPlugin *plugin = [[AlipayPlugin alloc] init];
+            [plugin backToJs:resultDic];
+        }];
+        
+    }
+    return YES;
+}
+
+// NOTE: 9.0以后使用新API接口
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
+{
+    if ([url.host isEqualToString:@"safepay"]) {
+        
+        // 支付跳转支付宝钱包进行支付，处理支付结果
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+            AlipayPlugin *plugin = [[AlipayPlugin alloc] init];
+            [plugin backToJs:resultDic];
+        }];
+        
+    }
+    return YES;
+}
+```
 
 ### scheme配置
 
@@ -51,7 +95,8 @@ Anas Alipay Cordova Plugin，基于支付宝官方SDK进行封装，支持Androi
 
 ## 使用
 
-> cordova.plugins.AlipayPlugin.pay(
+``` 
+  cordova.plugins.AlipayPlugin.pay(
     /**
      * 成功回调
      *
@@ -75,4 +120,5 @@ Anas Alipay Cordova Plugin，基于支付宝官方SDK进行封装，支持Androi
     //服务器组装的加签支付信息，预先向服务器请求获取
     orderInfo
   );
+```
 
